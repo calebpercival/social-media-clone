@@ -28,7 +28,7 @@ app.post('/api/login', function (req, res) {
       result = false
     }
 
-    res.json(result)
+    res.json({token: result.token, username: result.username})
   })
 })
 

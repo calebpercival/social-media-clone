@@ -23,6 +23,11 @@
             if(loggedIn){ //if token is found 
                 document.getElementById('login').classList.add('hidden') //remove login link
                 document.getElementById('logout').classList.remove('hidden') //show logout link
+
+                let text = '<br>' + 'Currently logged in as ' + sessionStorage.getItem('username')
+                let body = document.getElementsByTagName('body')[0]
+                body.insertAdjacentHTML('beforeend', text)
+
             }
             else{ //else if token is not found
                 document.getElementById('logout').classList.add('hidden') //remove logout link
