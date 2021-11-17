@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
     <title>Log In</title>
 </head>
 <body>
@@ -17,14 +18,9 @@
         <!-- TODO: Add submit button -->
         <input type="submit" value="Submit">
     </form>
+    <p id="loginFailed" class="hidden">Login failed, Username or password incorrect.</p>
 
     <script>
-        /*
-            TODO: Stop the submit button sending the form
-            TODO: Capture the input values using FormData
-            TODO: Send the data to the login API /api/login
-            TODO: Check the login is correct agains some hard-coded values, e.g. username="test@test.com", password="password"
-         */
 
         function callApi(username,password){
             let url = "/api/login"; //api url
@@ -47,13 +43,15 @@
                                 
                                 window.location = "/" //redirect to home page
                             }
-                    })
+                            else{ //else if login failed
+                                document.getElementById('loginFailed').classList.remove('hidden') //show error message
+                            }
+                        })
                     });
         }
 
         let form = document.querySelector("form"); //gets form from document
         
-
         form.addEventListener("submit", (event) => { //submit event listener
             event.preventDefault(); // prevents form from sending
 
