@@ -21,7 +21,7 @@ app.post('/api/login', function (req, res) {
 
   // funcs.checkLogin(req.body.user, req.body.pass)
   //res.send(JSON.stringify(funcs.checkLogin(req.body.user, req.body.pass)));
-  user.login(req.body.user, req.body.pass, result => {
+  user.login(req.body.username, req.body.password, result => {
 
     //if result is undefined
     if (!result) {

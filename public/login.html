@@ -22,32 +22,16 @@
 
     <script>
 
-        function callApi(username,password){
-            let url = "/api/login"; //api url
+        function callApi(url, data){
+            //let url = "/api/login"; //api url
             
             return fetch(url, {
                 method:"POST",
                 headers:{
                     "Content-Type": "application/json"
                 }, 
-                body:JSON.stringify({user:username, pass:password})
-            }).then( 
-                    function(response) {
-                        response.json().then(response => { //convert to json
-                            console.log(response)
-
-                            if(response && response.token) {
-                                //store token and username in session storage
-                                window.sessionStorage.setItem('token', response.token)
-                                window.sessionStorage.setItem('username', response.username)
-                                
-                                window.location = "/" //redirect to home page
-                            }
-                            else{ //else if login failed
-                                document.getElementById('loginFailed').classList.remove('hidden') //show error message
-                            }
-                        })
-                    });
+                body:JSON.stringify(data)
+            })
         }
 
         let form = document.querySelector("form"); //gets form from document
@@ -59,9 +43,26 @@
             let username = data.get("username"); // gets username from form data
             let password = data.get("password"); // gets password from form data
 
-            callApi(username, password).then((response) => {
+            callApi("/api/login",{username: username, password: password}).then( 
+                    function(response) {
+                        response.json().then(response => { //convert to json
+                            console.log(response)
+
+                            if(response && response.token) {
+                                //store token and username in session storage
+                                window.sessionStorage.setItem('token', response.token)
+                                window.sessionStorage.setItem('username', response.username)
+                                console.log(response)
+                                
+                                window.location = "/" //redirect to home page
+                            }
+                            else{ //else if login failed
+                                document.getElementById('loginFailed').classList.remove('hidden') //show error message
+                            }
+                        })
+                    }).then((response) => {
                  console.log(response)
-            })
+            });
         })
 
     </script>
