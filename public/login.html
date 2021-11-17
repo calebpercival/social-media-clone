@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
+    <script src="js/callApi.js"></script>
     <title>Log In</title>
 </head>
 <body>
@@ -22,17 +23,15 @@
 
     <script>
 
-        function callApi(url, data){
-            //let url = "/api/login"; //api url
-            
-            return fetch(url, {
-                method:"POST",
-                headers:{
-                    "Content-Type": "application/json"
-                }, 
-                body:JSON.stringify(data)
-            })
-        }
+        // function callApi(url, data){            
+        //     return fetch(url, {
+        //         method:"POST",
+        //         headers:{
+        //             "Content-Type": "application/json"
+        //         }, 
+        //         body:JSON.stringify(data)
+        //     })
+        // }
 
         let form = document.querySelector("form"); //gets form from document
         
