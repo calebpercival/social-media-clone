@@ -9,8 +9,8 @@
 
 <body>
     <h1>Home page</h1>
-    <a href="/login.html">Login</a>
-    <a href="#" onclick="logout()" class="hidden">Logout</a>
+    <a id="login" href="/login.html">Login</a>
+    <a id="logout" href="#" onclick="logout()" class="hidden">Logout</a>
     <script>
         function logout(){ //function logs the user out and removes the token
             sessionStorage.removeItem('token') //removes token from session storage
@@ -18,8 +18,16 @@
         }
 
         addEventListener('DOMContentLoaded', (event) => { //runs when html is loaded
-            let loggedIn = window.sessionStorage.getItem('token') 
-
+            let loggedIn = window.sessionStorage.getItem('token') //get token from session storage
+            
+            if(loggedIn){ //if token is found 
+                document.getElementById('login').classList.add('hidden') //remove login link
+                document.getElementById('logout').classList.remove('hidden') //show logout link
+            }
+            else{ //else if token is not found
+                document.getElementById('logout').classList.add('hidden') //remove logout link
+                document.getElementById('login').classList.remove('hidden') //show login link
+            }
         })
     </script>
 </body>
