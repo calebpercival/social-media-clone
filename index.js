@@ -5,6 +5,8 @@ const port = 3000
 // You can require your own code as well...
 const funcs = require('./src/funcs.js')
 const user = require('./src/users')
+const posts = require('./src/posts')
+const { title } = require('process')
 
 // Tell Express to server HTML, JS, CSS etc from the public/ folder
 // See: http://expressjs.com/en/starter/static-files.html
@@ -18,9 +20,6 @@ app.get('/api/hello', function (req, res) {
 })
 
 app.post('/api/login', function (req, res) {
-
-  // funcs.checkLogin(req.body.user, req.body.pass)
-  //res.send(JSON.stringify(funcs.checkLogin(req.body.user, req.body.pass)));
   user.login(req.body.username, req.body.password, result => {
 
     //if result is undefined
@@ -28,7 +27,13 @@ app.post('/api/login', function (req, res) {
       result = false
     }
 
-    res.json({token: result.token, username: result.username})
+    res.json({token: result.token, username: result.username}) //sends response
+  })
+})
+
+app.post('/api/getPost', function (req, res) {
+  posts.getPost(req.body.post_id, result => {
+    res.json({post_id: result.post_id, title: result.title, body: result.body})
   })
 })
 
