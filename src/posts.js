@@ -12,16 +12,10 @@ module.exports = {
         })
     },
 
-    newPost(postTitle, postBody, user_id, callback){
+    newPost(postTitle, postBody, user, callback){
         DB.connect().then( db => {
-            db.run("INSERT INTO posts (title, body, user_id) values (?,?,?)", postTitle, postBody, user_id).then( () => {
-                //if(err){
+            db.run("INSERT INTO posts (title, body, user_id) values (?,?,?)", postTitle, postBody, user.id).then( () => {
                     callback()
-                    
-                //}
-                //callback(json({
-                //    message:"success"
-                // }))
             })
         })
     }

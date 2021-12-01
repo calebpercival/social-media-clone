@@ -7,6 +7,7 @@ const funcs = require('./src/funcs.js')
 const user = require('./src/users')
 const posts = require('./src/posts')
 const { title } = require('process')
+const { findByToken } = require('./src/users')
 
 // Tell Express to server HTML, JS, CSS etc from the public/ folder
 // See: http://expressjs.com/en/starter/static-files.html
@@ -16,7 +17,7 @@ app.use(express.json())
 // Our API routes will be here
 app.get('/api/hello', function (req, res) {
   // Return the response by calling our function
-  res.send(funcs.myFunction());
+  res.send(funcs.myFunction())
 })
 
 app.post('/api/login', function (req, res) {
@@ -38,9 +39,23 @@ app.post('/api/getPost', function (req, res) { //api to get posts
 })
 
 app.post('/api/newPost', function (req, res) {
-  posts.newPost(req.body.postTitle, req.body.postBody, req.body.userId, result => {
-    res.json(true)
-  })
+  let apiToken = req.get('X-API-Token') //gets the api token from the header in the callApi fetch request
+  //let userId = user.findByToken(apiToken)
+  //console.log("user id is ", userId.userId)
+
+  if(apiToken){ //if there is a token
+    user.findByToken(apiToken, use => {
+      if(use){ //if there is a user
+        posts.newPost(req.body.postTitle, req.body.postBody, use, result => {
+          res.json(true)
+        })
+      }
+    })
+  }
+  
+  // posts.newPost(req.body.postTitle, req.body.postBody, userId, result => {
+  //   res.json(true)
+  // })
 })
 
 // Tell us where we're running from

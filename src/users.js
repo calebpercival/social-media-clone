@@ -25,7 +25,7 @@ module.exports = {
         })
     },
 
-    findByToken(Token) { //gets user by token
+    findByToken(token, callback) { //gets user by token
         DB.connect().then(db => {
             db.get('SELECT * FROM users WHERE token = ?', token).then(result => {
                 callback(result)
