@@ -19,17 +19,6 @@
     <p id="loginFailed" class="hidden">Login failed, Username or password incorrect.</p>
 
     <script>
-
-        // function callApi(url, data){            
-        //     return fetch(url, {
-        //         method:"POST",
-        //         headers:{
-        //             "Content-Type": "application/json"
-        //         }, 
-        //         body:JSON.stringify(data)
-        //     })
-        // }
-
         let form = document.querySelector("form"); //gets form from document
         
         form.addEventListener("submit", (event) => { //submit event listener
@@ -48,7 +37,6 @@
                                 //store token and username in session storage
                                 window.sessionStorage.setItem('token', response.token)
                                 window.sessionStorage.setItem('username', response.username)
-                                console.log(response)
                                 
                                 window.location = "/" //redirect to home page
                             }

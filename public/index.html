@@ -5,18 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
     <script src="js/callApi.js"></script>
+    <script src="js/logout.js"></script>
     <title>Home page</title>
 </head>
 
 <body>
     <h1>Home page</h1>
     <a id="login" href="/login.html">Login</a>
+    <a id="newPost" href="/newPost.html">New Post</a>
     <a id="logout" href="#" onclick="logout()" class="hidden">Logout</a>
     <script>
-        function logout(){ //function logs the user out and removes the token
-            sessionStorage.removeItem('token') //removes token from session storage
-            window.location = "/index.html" //navigates back to home page
-        }
 
         addEventListener('DOMContentLoaded', (event) => { //runs when html is loaded
             let loggedIn = window.sessionStorage.getItem('token') //get token from session storage
@@ -24,6 +22,7 @@
             if(loggedIn){ //if token is found 
                 document.getElementById('login').classList.add('hidden') //remove login link
                 document.getElementById('logout').classList.remove('hidden') //show logout link
+                document.getElementById('newPost').classList.remove('hidden')
 
                 let text = '<br>' + 'Currently logged in as ' + sessionStorage.getItem('username')
                 let body = document.getElementsByTagName('body')[0]
@@ -33,6 +32,7 @@
             else{ //else if token is not found
                 document.getElementById('logout').classList.add('hidden') //remove logout link
                 document.getElementById('login').classList.remove('hidden') //show login link
+                document.getElementById('newPost').classList.add('hidden')
             }
         })
 

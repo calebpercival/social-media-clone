@@ -31,9 +31,15 @@ app.post('/api/login', function (req, res) {
   })
 })
 
-app.post('/api/getPost', function (req, res) {
+app.post('/api/getPost', function (req, res) { //api to get posts
   posts.getPost(req.body.post_id, result => {
     res.json({post_id: result.post_id, title: result.title, body: result.body})
+  })
+})
+
+app.post('/api/newPost', function (req, res) {
+  posts.newPost(req.body.postTitle, req.body.postBody, req.body.userId, result => {
+    res.json(true)
   })
 })
 
