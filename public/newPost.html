@@ -29,7 +29,9 @@
             let postBody = data.get("postBody");
             let userId = 1;
 
-            callApi("/api/newPost", {postTitle:postTitle, postBody:postBody, userId: userId})
+            if(callApi("/api/newPost", {postTitle:postTitle, postBody:postBody, userId: userId})){ //if api returns true
+                window.location = "/" //redirect to home page
+            }
         })
     </script>
 </body>
