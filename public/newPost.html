@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="style/main.css">
     <script src="js/callApi.js"></script>
     <script src="js/logout.js"></script>
     <title>New Post</title>
@@ -14,9 +14,13 @@
     <a id="logout" href="#" onclick="logout()">Logout</a>
     
     <form>
-        <input type="text" id="postTitle" name="postTitle">
-        <input type="text" id="postBody" name="postBody">
-        <input type="submit" value="Submit">
+        <label for="postTitle" class="form-label">Title</label>
+        <input type="text" class="form-control" id="postTitle" name="postTitle">
+        <label for="postBody" class="form-label">Post</label>
+        <input type="text" class="form-control" id="postBody" name="postBody">
+        <label for="fileUpload">Attach Image</label>
+        <input type="file" class="form-control" id="formFile">
+        <input type="submit" value="Submit" class="btn btn-primary mb3">
     </form>
     <script>
         let form = document.querySelector("form"); //gets from element from document
@@ -34,5 +38,7 @@
             }
         })
     </script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script> -->
 </body>
 </html>
