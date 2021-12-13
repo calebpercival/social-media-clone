@@ -10,10 +10,12 @@
 </head>
 
 <body>
-    <h1>Home page</h1>
-    <a id="login" href="/login.html">Login</a>
-    <a id="newPost" href="/newPost.html">New Post</a>
-    <a id="logout" href="#" onclick="logout()" class="hidden">Logout</a>
+    <div class="container">
+        <h1>Home page</h1>
+        <a id="login" href="/login.html">Login</a>
+        <a id="newPost" href="/newPost.html">New Post</a>
+        <a id="logout" href="#" onclick="logout()" class="hidden">Logout</a>
+    </div>
     <script>
 
         addEventListener('DOMContentLoaded', (event) => { //runs when html is loaded
@@ -25,7 +27,7 @@
                 document.getElementById('newPost').classList.remove('hidden')
 
                 let text = '<br>' + 'Currently logged in as ' + sessionStorage.getItem('username')
-                let body = document.getElementsByTagName('body')[0]
+                let body = document.getElementsByTagName('div')[0]
                 body.insertAdjacentHTML('beforeend', text)
 
             }

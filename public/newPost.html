@@ -9,19 +9,21 @@
     <title>New Post</title>
 </head>
 <body>
-    <h1>New Post</h1>
-    <a href="/index.html">Home</a>
-    <a id="logout" href="#" onclick="logout()">Logout</a>
-    
-    <form>
-        <label for="postTitle" class="form-label">Title</label>
-        <input type="text" class="form-control" id="postTitle" name="postTitle">
-        <label for="postBody" class="form-label">Post</label>
-        <input type="text" class="form-control" id="postBody" name="postBody">
-        <label for="fileUpload">Attach Image</label>
-        <input type="file" class="form-control" id="formFile">
-        <input type="submit" value="Submit" class="btn btn-primary mb3">
-    </form>
+    <div class="container">
+        <h1>New Post</h1>
+        <a href="/index.html">Home</a>
+        <a id="logout" href="#" onclick="logout()">Logout</a>
+        
+        <form>
+            <label for="postTitle" class="form-label">Title</label>
+            <input type="text" class="form-control" id="postTitle" name="postTitle">
+            <label for="postBody" class="form-label">Post</label>
+            <input type="text" class="form-control" id="postBody" name="postBody">
+            <label for="fileUpload">Attach Image</label>
+            <input type="file" class="form-control" id="fileUpload">
+            <input type="submit" value="Submit" class="btn btn-primary mb3">
+        </form>
+    </div>
     <script>
         let form = document.querySelector("form"); //gets from element from document
 
