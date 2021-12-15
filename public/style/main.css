@@ -11122,4 +11122,9 @@ textarea.form-control-lg {
   display: none;
 }
 
+header .container {
+  display: flex;
+  flex-direction: row;
+}
+
 /*# sourceMappingURL=main.css.map */
