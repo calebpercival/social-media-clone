@@ -29,7 +29,14 @@
         </nav>
     </header>
     <div class="container">
-
+        <template id="postTemplate">
+            <div class="post">
+                <h3></h3>
+                <div class="body"></div>
+            </div>
+        </template>
+        <div id="postsContainer"></div>
+        <button onclick="nextPage()" class="btn btn-primary">Load more...</button>
     </div>
     <script>
 
@@ -53,13 +60,61 @@
             }
         })
 
-        callApi("/api/getPost",{post_id: 1}).then(
-            function(response) {
-                console.log(response)
-            }
-        )
+        let itemsPerPage = 3
+        let currentPage = 0
+
+        function loadPosts(){
+            let offset = itemsPerPage * currentPage
+            let template = document.getElementById("postTemplate")
+            let container = document.getElementById("postsContainer")
+           
+            
+            // clone.getElementsByTagName('h3')[0].textContent = "My Post Title"
+            // clone.getElementsByClassName('body')[0].textContent = "My post content"
+            // container.appendChild(clone)
+            // fetch("/api/posts?offset=" + offset).then(result => {
+            //     console.log(result)
+            // })
+            fetch('/api/posts?offset=' + offset).then( function(result){
+            //test if result is empty
+            result.json().then(result => { // convert result to json
+                result.forEach(post => { //for each item in array
+                    console.log(post.body)
+                    let clone = template.content.firstElementChild.cloneNode(true) //create clone of template post
+
+                    clone.getElementsByTagName('h3')[0].textContent = post.title
+                    clone.getElementsByClassName('body')[0].textContent = post.body
+                    container.appendChild(clone)
+                })
+            })
+ 
+            })
+            // callApi("/api/posts",{offset: offset}).then(
+            //     response => {
+            //         console.log()
+                    
+            //         for(let i = 0; i < response.length; i++){ //for each row in response
+            //             clone.getElementsByTagName('h3')[i].textContent = response[i].title
+            //             clone.getElementsByClassName('body')[i].textContent = response[i].body
+                        
+            //             container.appendChild(clone)
+            //         }
+            //     }
+            // )
+        }
+
+        function nextPage(){
+            currentPage++
+            loadPosts()
+        }
+
+        loadPosts() //loads first page
+
+        // callApi("/api/getPost",{post_id: 1}).then(
+        //     function(response) {
+        //         console.log(response)
+        //     }
+        // )
     </script>
 </body>
-<!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script> -->
 </html>

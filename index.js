@@ -38,6 +38,16 @@ app.post('/api/getPost', function (req, res) { //api to get posts
   })
 })
 
+app.get('/api/posts', (req, res) => {
+  let limit = 3
+  let offset = req.query.offset
+  // let offset = req.body.offset
+
+  posts.getPosts(offset, limit, (result) => {
+    res.json(result)
+  })
+})
+
 app.post('/api/newPost', function (req, res) {
   let apiToken = req.get('X-API-Token') //gets the api token from the header in the callApi fetch request
   //let userId = user.findByToken(apiToken)
