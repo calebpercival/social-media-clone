@@ -67,40 +67,19 @@
             let offset = itemsPerPage * currentPage
             let template = document.getElementById("postTemplate")
             let container = document.getElementById("postsContainer")
-           
             
-            // clone.getElementsByTagName('h3')[0].textContent = "My Post Title"
-            // clone.getElementsByClassName('body')[0].textContent = "My post content"
-            // container.appendChild(clone)
-            // fetch("/api/posts?offset=" + offset).then(result => {
-            //     console.log(result)
-            // })
             fetch('/api/posts?offset=' + offset).then( function(result){
-            //test if result is empty
-            result.json().then(result => { // convert result to json
-                result.forEach(post => { //for each item in array
-                    console.log(post.body)
-                    let clone = template.content.firstElementChild.cloneNode(true) //create clone of template post
+                result.json().then(result => { // convert result to json
+                    result.forEach(post => { //for each item in array
+                        console.log(post.body)
+                        let clone = template.content.firstElementChild.cloneNode(true) //create clone of template post
 
-                    clone.getElementsByTagName('h3')[0].textContent = post.title
-                    clone.getElementsByClassName('body')[0].textContent = post.body
-                    container.appendChild(clone)
+                        clone.getElementsByTagName('h3')[0].textContent = post.title
+                        clone.getElementsByClassName('body')[0].textContent = post.body
+                        container.appendChild(clone)
+                    })
                 })
             })
- 
-            })
-            // callApi("/api/posts",{offset: offset}).then(
-            //     response => {
-            //         console.log()
-                    
-            //         for(let i = 0; i < response.length; i++){ //for each row in response
-            //             clone.getElementsByTagName('h3')[i].textContent = response[i].title
-            //             clone.getElementsByClassName('body')[i].textContent = response[i].body
-                        
-            //             container.appendChild(clone)
-            //         }
-            //     }
-            // )
         }
 
         function nextPage(){

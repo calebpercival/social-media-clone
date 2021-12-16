@@ -11127,4 +11127,8 @@ header .container {
   flex-direction: row;
 }
 
+form .counter {
+  position: absolute;
+}
+
 /*# sourceMappingURL=main.css.map */
