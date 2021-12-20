@@ -11,7 +11,7 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light container">
-            <a href="#" class="navbar-brand">Social Media Clone</a>
+            <a href="#" class="navbar-brand"><h1>Social Media Clone</h1></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -21,20 +21,21 @@
                     <a href="index.html" class="nav-item nav-link">Home</a>
                     <a href="newPost.html" class="nav-item nav-link hidden">New Post</a>
                     <a id="login" href="login.html" class="nav-item nav-link active" id="login">Login</a>
+                    <a href="signup.html" id="signup" class="nav-item nav-link">Sign Up</a>
                     <a id="logout" href="#" onclick="logout()"  class="nav-item nav-link hidden">Logout</a>
                 </div>
             </div>
         </nav>
     </header>
     <div class="container">
-        <h2>Log in</h2>
+        <h2>Login</h2>
 
         <form>
-            <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username" name="username">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password">
-            <input type="submit" class="btn btn-primary mb-3" value="Submit">
+            <label for="username" class="form-label my-2">Username</label>
+            <input type="text" class="form-control my-2" id="username" name="username">
+            <label for="password" class="form-label my-2">Password</label>
+            <input type="password" class="form-control my-2" id="password" name="password">
+            <input type="submit" class="btn btn-primary my-3" value="Submit">
         </form>
         <p id="loginFailed" class="hidden">Login failed, Username or password incorrect.</p>
     </div>

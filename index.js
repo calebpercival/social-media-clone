@@ -39,11 +39,16 @@ app.post('/api/getPost', function (req, res) { //api to get posts
 })
 
 app.get('/api/posts', (req, res) => {
-  let limit = 3
+  let limit = 5
   let offset = req.query.offset
-  // let offset = req.body.offset
 
   posts.getPosts(offset, limit, (result) => {
+    res.json(result)
+  })
+})
+
+app.get('/api/oldestPost', (req, res) => {
+  posts.oldestPost( result => {
     res.json(result)
   })
 })

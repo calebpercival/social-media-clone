@@ -13,7 +13,7 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light container">
-            <a href="#" class="navbar-brand">Social Media Clone</a>
+            <a href="#" class="navbar-brand"><h1>Social Media Clone</h1></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -23,6 +23,7 @@
                     <a href="/index.html" class="nav-item nav-link active">Home</a>
                     <a href="newPost.html" class="nav-item nav-link hidden" id="newPost">New Post</a>
                     <a id="login" href="login.html" class="nav-item nav-link" id="login">Login</a>
+                    <a href="signup.html" id="signup" class="nav-item nav-link">Sign Up</a>
                     <a id="logout" href="#" onclick="logout()"  class="nav-item nav-link hidden">Logout</a>
                 </div>
             </div>
@@ -36,7 +37,7 @@
             </div>
         </template>
         <div id="postsContainer"></div>
-        <button onclick="nextPage()" class="btn btn-primary">Load more...</button>
+        <button onclick="nextPage()" class="btn btn-primary mx-auto my-2" id="loadPostsBtn">Load more...</button>
     </div>
     <script>
 
@@ -45,6 +46,7 @@
             
             if(loggedIn){ //if token is found 
                 document.getElementById('login').classList.add('hidden') //remove login link
+                document.getElementById('signup').classList.add('hidden')
                 document.getElementById('logout').classList.remove('hidden') //show logout link
                 document.getElementById('newPost').classList.remove('hidden')
 
@@ -57,11 +59,21 @@
                 document.getElementById('logout').classList.add('hidden') //remove logout link
                 document.getElementById('login').classList.remove('hidden') //show login link
                 document.getElementById('newPost').classList.add('hidden')
+                document.getElementById('signup').classList.remove('hidden')
             }
         })
 
-        let itemsPerPage = 3
+        let itemsPerPage = 5
         let currentPage = 0
+        let oldestPostId;
+
+        fetch('/api/oldestPost').then( //calls api to get id of first/oldest post in posts table
+            function(result){
+                result.json().then(result => {
+                    oldestPostId = result['MIN(post_id)']
+                })
+            }
+        )
 
         function loadPosts(){
             let offset = itemsPerPage * currentPage
@@ -70,13 +82,17 @@
             
             fetch('/api/posts?offset=' + offset).then( function(result){
                 result.json().then(result => { // convert result to json
+
                     result.forEach(post => { //for each item in array
-                        console.log(post.body)
                         let clone = template.content.firstElementChild.cloneNode(true) //create clone of template post
 
                         clone.getElementsByTagName('h3')[0].textContent = post.title
                         clone.getElementsByClassName('body')[0].textContent = post.body
                         container.appendChild(clone)
+
+                        if(post.post_id == oldestPostId){ //if post is the first post
+                            document.getElementById('loadPostsBtn').style.display = "none" //remove load more button
+                        }
                     })
                 })
             })
@@ -89,7 +105,7 @@
 
         loadPosts() //loads first page
 
-        // callApi("/api/getPost",{post_id: 1}).then(
+        // callApi("/api/getPost",{post_id: 1}).then( //gets post by id
         //     function(response) {
         //         console.log(response)
         //     }

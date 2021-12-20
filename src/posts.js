@@ -22,6 +22,17 @@ module.exports = {
         })
     },
 
+    oldestPost(callback){ //returns the id of the oldest post(smallest id)
+        DB.connect().then( db => {
+            db.get('SELECT MIN(post_id) FROM posts').then(
+                result => {
+                    
+                    callback(result)
+                }
+            )
+        })
+    },
+
     newPost(postTitle, postBody, user, callback){
         DB.connect().then( db => {
             db.run("INSERT INTO posts (title, body, user_id) values (?,?,?)", postTitle, postBody, user.id).then( () => {

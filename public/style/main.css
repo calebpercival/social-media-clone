@@ -11137,4 +11137,8 @@ form .counter {
   right: 10px;
 }
 
+#loadPostsBtn {
+  display: block;
+}
+
 /*# sourceMappingURL=main.css.map */
