@@ -29,7 +29,43 @@
     </header>
     <div class="container">
         <h2>Sign up</h2>
+
+        <form>
+            <label for="username" class="form-label my-2">Username</label>
+            <input type="text" class="form-control my-2" id="username" name="username">
+            <label for="password" class="form-label my-2">Password</label>
+            <input type="password" class="form-control my-2" id="password" name="password">
+            <label for="confirmPassword" class="form-label my-2">Confirm Password</label>
+            <input type="password" class="form-control my-2" id="confirmPassword" name="confirmPassword">
+            <input type="submit" value="Create Account" class="btn btn-primary my-2">
+        </form>
+        <p id="passwordValidation" class="hidden">Please ensure passwords match.</p>
         <p>Already have an account? <a href="login.html">Login here</a></p>
     </div>
+    <script>
+        let form = document.querySelector("form");
+
+        form.addEventListener("submit", (event) => {
+            event.preventDefault() //prevents from from sending
+
+            let data = new FormData(form) //gets form data
+            let username = data.get('username')
+            let password = data.get('password')
+            let confirmPassword = data.get('confirmPassword')
+
+            if(confirmPassword === password){
+                callApi('/api/newUser',{username: username, password: password}).then(
+                    function(response) {
+                        response.json().then(response => {
+                            window.location = "login.html"
+                        })
+                    }
+                )
+            } 
+            else {
+                document.getElementById('passwordValidation').classList.remove('hidden')
+            }
+        })
+    </script>
 </body>
 </html>

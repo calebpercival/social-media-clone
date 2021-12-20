@@ -38,16 +38,17 @@
             <input type="submit" class="btn btn-primary my-3" value="Submit">
         </form>
         <p id="loginFailed" class="hidden">Login failed, Username or password incorrect.</p>
+        <p>Don't have an account? <a href="signup.html">Sign up</a></p>
     </div>
     <script>
         let form = document.querySelector("form"); //gets form from document
         
         form.addEventListener("submit", (event) => { //submit event listener
-            event.preventDefault(); // prevents form from sending
+            event.preventDefault() // prevents form from sending
 
-            let data = new FormData(form); //gets form data
-            let username = data.get("username"); // gets username from form data
-            let password = data.get("password"); // gets password from form data
+            let data = new FormData(form) //gets form data
+            let username = data.get("username") // gets username from form data
+            let password = data.get("password") // gets password from form data
 
             callApi("/api/login",{username: username, password: password}).then( 
                     function(response) {
