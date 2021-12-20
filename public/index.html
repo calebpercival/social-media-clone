@@ -31,9 +31,16 @@
     </header>
     <div class="container">
         <template id="postTemplate">
-            <div class="post">
+            <!-- <div class="post">
                 <h3></h3>
                 <div class="body"></div>
+            </div> -->
+            <div class="card text-dark bg-light mb-2 post">
+                <div class="card-header user"></div>
+                <div class="card-body">
+                    <h5 class="card-title title"></h5>
+                    <p class="card-text body"></p>
+                </div>
             </div>
         </template>
         <div id="postsContainer"></div>
@@ -86,7 +93,15 @@
                     result.forEach(post => { //for each item in array
                         let clone = template.content.firstElementChild.cloneNode(true) //create clone of template post
 
-                        clone.getElementsByTagName('h3')[0].textContent = post.title
+                        callApi('/api/getUserById', {user_id:post.user_id}).then( //gets user using user id in post
+                            function(result){
+                                result.json().then(result => {
+                                    clone.getElementsByClassName('user')[0].textContent = result.username //sets username in post header
+                                })
+                            }
+                        )
+                        
+                        clone.getElementsByTagName('h5')[0].textContent = post.title
                         clone.getElementsByClassName('body')[0].textContent = post.body
                         container.appendChild(clone)
 

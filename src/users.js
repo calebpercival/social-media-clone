@@ -36,7 +36,18 @@ module.exports = {
         })
     },
 
-    newUser(username, password, callback){
+    findById(user_id, callback) {
+        DB.connect().then(db => {
+            db.get('SELECT * FROM users WHERE id = ?', user_id).then(result => {
+                callback(result)
+            })
+            .catch(err => {
+                console.log("users.findById failed with error " + err)
+            })
+        })
+    },
+
+    newUser(username, password, callback) {
         DB.connect().then( db=> {
             db.run("INSERT INTO users (username, password) values (?,?)", username, password).then( () => {
                 callback()

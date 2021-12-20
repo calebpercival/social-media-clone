@@ -62,22 +62,24 @@ app.get('/api/oldestPost', (req, res) => {
 
 app.post('/api/newPost', function (req, res) {
   let apiToken = req.get('X-API-Token') //gets the api token from the header in the callApi fetch request
-  //let userId = user.findByToken(apiToken)
-  //console.log("user id is ", userId.userId)
 
   if(apiToken){ //if there is a token
-    user.findByToken(apiToken, use => {
-      if(use){ //if there is a user
-        posts.newPost(req.body.postTitle, req.body.postBody, use, result => {
+    user.findByToken(apiToken, userdata => {
+      if(userdata){ //if there is a user
+        posts.newPost(req.body.postTitle, req.body.postBody, userdata, result => {
           res.json(true)
         })
       }
     })
   }
   
-  // posts.newPost(req.body.postTitle, req.body.postBody, userId, result => {
-  //   res.json(true)
-  // })
+})
+
+
+app.post('/api/getUserById', (req, res) => {
+  user.findById(req.body.user_id, result => {
+    res.json({username:result.username})
+  })
 })
 
 // Tell us where we're running from
