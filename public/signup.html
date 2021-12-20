@@ -39,7 +39,8 @@
             <input type="password" class="form-control my-2" id="confirmPassword" name="confirmPassword">
             <input type="submit" value="Create Account" class="btn btn-primary my-2">
         </form>
-        <p id="passwordValidation" class="hidden">Please ensure passwords match.</p>
+        <p id="passwordValidation" class="hidden alert alert-danger my-2">Please ensure passwords match.</p>
+        <p id="successMsg" class="hidden alert alert-success my-2">Account Created! <a href="login.html">Login here</a> </p>
         <p>Already have an account? <a href="login.html">Login here</a></p>
     </div>
     <script>
@@ -57,7 +58,8 @@
                 callApi('/api/newUser',{username: username, password: password}).then(
                     function(response) {
                         response.json().then(response => {
-                            window.location = "login.html"
+                            document.getElementById('successMsg').classList.remove('hidden')
+                            // window.location = "login.html"
                         })
                     }
                 )

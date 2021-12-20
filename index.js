@@ -8,6 +8,7 @@ const user = require('./src/users')
 const posts = require('./src/posts')
 const { title } = require('process')
 const { findByToken } = require('./src/users')
+const users = require('./src/users')
 
 // Tell Express to server HTML, JS, CSS etc from the public/ folder
 // See: http://expressjs.com/en/starter/static-files.html
@@ -29,6 +30,12 @@ app.post('/api/login', function (req, res) {
     }
 
     res.json({token: result.token, username: result.username}) //sends response
+  })
+})
+
+app.post('/api/newUser', function (req, res) {
+  users.newUser(req.body.username, req.body.password, result => {
+    res.json(true)
   })
 })
 

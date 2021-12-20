@@ -34,5 +34,13 @@ module.exports = {
                 console.log("users.findByToken failed with error " + err)
             })
         })
+    },
+
+    newUser(username, password, callback){
+        DB.connect().then( db=> {
+            db.run("INSERT INTO users (username, password) values (?,?)", username, password).then( () => {
+                callback()
+            })
+        })
     }
 }
