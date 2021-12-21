@@ -32,7 +32,7 @@
     <div class="container">
         <template id="postTemplate">
             <div class="card text-dark bg-light mb-2 post">
-                <div class="card-header"><div class="user"></div><div class="edit hidden"><a href="" class="btn">Edit</a></div></div>
+                <div class="card-header"><div class="user"></div><div class="edit "></div></div>
                 <div class="card-body">
                     <h5 class="card-title title"></h5>
                     <p class="card-text body"></p>
@@ -98,6 +98,10 @@
             }
         )
 
+        function editPost(post){
+            alert("open modal here")
+        }
+
         function loadPosts(){
             let offset = itemsPerPage * currentPage
             let template = document.getElementById("postTemplate")
@@ -126,7 +130,12 @@
                             callApi('/api/getUserByToken', {}).then( function(result){ //calls api to get user id of currently logged user using token
                                 result.json().then( result => {
                                     if(result.id == post.user_id){ //if post belongs to logged in user
-                                        clone.getElementsByClassName('edit')[0].classList.remove('hidden')
+                                        let editBtn = document.createElement('a') //creates edit btn element
+                                        editBtn.innerHTML = "Edit"
+                                        editBtn.classList ='btn'
+                                        editBtn.onclick = function(){editPost(post)} //onclick pass post to function to open modal and edit
+                                        clone.getElementsByClassName('edit')[0].appendChild(editBtn)
+                                        
                                     } 
                                 }) 
                             })
