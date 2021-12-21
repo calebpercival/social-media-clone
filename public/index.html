@@ -44,26 +44,22 @@
         <button onclick="nextPage()" class="btn btn-primary mx-auto my-2" id="loadPostsBtn">Load more...</button>
     </div>
     <script>
-        // following code for some reason does not work as a function but only in
+        // following code works in load posts but not as its own function?
         // function editAccess(posterId){ //function returns true if currently logged in user can edit post
         //     let loggedIn = window.sessionStorage.getItem('token')// get current token from session
-
         //     if(loggedIn){ //if token found
         //         callApi('/api/getUserByToken', {}).then( function(result){ //calls api to get user id of currently logged user using token
         //             result.json().then( result => {
-        //                 console.log(posterId + " == " + result.id)
         //                 if(result.id == posterId){ //if post belongs to logged in user
         //                     return true
         //                 } 
         //                 else{
-                            
         //                     return false
         //                 }
         //             }) 
         //         })
         //     }
         //     else{ //if no token found
-             
         //         return false
         //     }
         // }
@@ -126,7 +122,7 @@
                         
                         let loggedIn = window.sessionStorage.getItem('token')// get current token from session
 
-                        if(loggedIn){ //if token found
+                        if(loggedIn){ //user is logged in
                             callApi('/api/getUserByToken', {}).then( function(result){ //calls api to get user id of currently logged user using token
                                 result.json().then( result => {
                                     if(result.id == post.user_id){ //if post belongs to logged in user
