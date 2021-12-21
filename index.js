@@ -82,6 +82,15 @@ app.post('/api/getUserById', (req, res) => {
   })
 })
 
+app.post('/api/getUserByToken', (req, res) => {
+  user.findByToken(req.get('X-API-Token'), result => {
+    if(result){ //if user logged in
+      console.log(result)
+      res.json({id:result.id, username:result.username})
+    }
+  })
+})
+
 // Tell us where we're running from
 console.log("Server running on http://localhost:" + port)
 app.listen(port)

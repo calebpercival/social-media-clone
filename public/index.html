@@ -31,22 +31,42 @@
     </header>
     <div class="container">
         <template id="postTemplate">
-            <!-- <div class="post">
-                <h3></h3>
-                <div class="body"></div>
-            </div> -->
             <div class="card text-dark bg-light mb-2 post">
-                <div class="card-header user"></div>
+                <div class="card-header"><div class="user"></div><div class="edit hidden"><a href="" class="btn">Edit</a></div></div>
                 <div class="card-body">
                     <h5 class="card-title title"></h5>
                     <p class="card-text body"></p>
                 </div>
             </div>
         </template>
+        <template id="edit"><a>edit</a></template>
         <div id="postsContainer"></div>
         <button onclick="nextPage()" class="btn btn-primary mx-auto my-2" id="loadPostsBtn">Load more...</button>
     </div>
     <script>
+        // following code for some reason does not work as a function but only in
+        // function editAccess(posterId){ //function returns true if currently logged in user can edit post
+        //     let loggedIn = window.sessionStorage.getItem('token')// get current token from session
+
+        //     if(loggedIn){ //if token found
+        //         callApi('/api/getUserByToken', {}).then( function(result){ //calls api to get user id of currently logged user using token
+        //             result.json().then( result => {
+        //                 console.log(posterId + " == " + result.id)
+        //                 if(result.id == posterId){ //if post belongs to logged in user
+        //                     return true
+        //                 } 
+        //                 else{
+                            
+        //                     return false
+        //                 }
+        //             }) 
+        //         })
+        //     }
+        //     else{ //if no token found
+             
+        //         return false
+        //     }
+        // }
 
         addEventListener('DOMContentLoaded', (event) => { //runs when html is loaded
             let loggedIn = window.sessionStorage.getItem('token') //get token from session storage
@@ -101,8 +121,21 @@
                             }
                         )
                         
-                        clone.getElementsByTagName('h5')[0].textContent = post.title
-                        clone.getElementsByClassName('body')[0].textContent = post.body
+                        clone.getElementsByTagName('h5')[0].textContent = post.title //set post title
+                        clone.getElementsByClassName('body')[0].textContent = post.body //set post body
+                        
+                        let loggedIn = window.sessionStorage.getItem('token')// get current token from session
+
+                        if(loggedIn){ //if token found
+                            callApi('/api/getUserByToken', {}).then( function(result){ //calls api to get user id of currently logged user using token
+                                result.json().then( result => {
+                                    if(result.id == post.user_id){ //if post belongs to logged in user
+                                        clone.getElementsByClassName('edit')[0].classList.remove('hidden')
+                                    } 
+                                }) 
+                            })
+                        }
+
                         container.appendChild(clone)
 
                         if(post.post_id == oldestPostId){ //if post is the first post

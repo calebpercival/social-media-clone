@@ -60,7 +60,7 @@
                                 window.sessionStorage.setItem('token', response.token)
                                 window.sessionStorage.setItem('username', response.username)
                                 
-                                window.location = "/" //redirect to home page
+                                window.location = "index.html" //redirect to home page
                             }
                             else{ //else if login failed
                                 document.getElementById('loginFailed').classList.remove('hidden') //show error message

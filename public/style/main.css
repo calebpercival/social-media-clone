@@ -11141,4 +11141,9 @@ form .counter {
   display: block;
 }
 
+.card-header {
+  display: flex;
+  justify-content: space-between;
+}
+
 /*# sourceMappingURL=main.css.map */
