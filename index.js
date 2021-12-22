@@ -72,9 +72,7 @@ app.post('/api/newPost', function (req, res) {
       }
     })
   }
-  
 })
-
 
 app.post('/api/getUserById', (req, res) => {
   user.findById(req.body.user_id, result => {
