@@ -33,9 +33,6 @@ function editForm(post){ //sets the default form values to the post value
 
 function deletePost(id){
     document.getElementById('confirmDelete').onclick = function(){
-        // fetch('/api/deletePost', {method:'DELETE', headers:{"Content-Type": "application/json"}, body:JSON.stringify({post_id:id})}).then( response => {
-        //     // window.location = "/"
-        // })
         if(callDelete('/api/deletePost',{post_id:id})){ //calls delete post api
             window.location = "/" //refreshes page
         }
