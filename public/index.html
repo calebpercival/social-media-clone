@@ -29,6 +29,7 @@
             </div>
         </nav>
     </header>
+
     <div class="container">
         <template id="postTemplate">
             <div class="card text-dark bg-light mb-2 post">
@@ -43,6 +44,29 @@
         <div id="postsContainer"></div>
         <button onclick="nextPage()" class="btn btn-primary mx-auto my-2" id="loadPostsBtn">Load more...</button>
     </div>
+
+    <!-- Edit Post Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="editModalLabel">Modal title</h5>
+            <button type="button" class="close btn" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            ...
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+    
     <script>
         // following code works in load posts but not as its own function?
         // function editAccess(posterId){ //function returns true if currently logged in user can edit post
@@ -133,7 +157,9 @@
                                         let editBtn = document.createElement('a') //creates edit btn element
                                         editBtn.innerHTML = "Edit"
                                         editBtn.classList ='btn'
-                                        editBtn.onclick = function(){editPost(post)} //onclick pass post to function to open modal and edit
+                                        editBtn.setAttribute('data-bs-toggle', 'modal') 
+                                        editBtn.setAttribute('data-bs-target', '#editModal')
+                                        // editBtn.onclick = function(){editPost(post)} //onclick pass post to function to open modal and edit
                                         clone.getElementsByClassName('edit')[0].appendChild(editBtn)
                                         
                                     } 
