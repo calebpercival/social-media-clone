@@ -39,5 +39,17 @@ module.exports = {
                     callback()
             })
         })
+    },
+
+    editPost(postId, postTitle, postBody, callback){
+        DB.connect().then( db => {
+            db.run('UPDATE posts SET title = ?, body = ? WHERE post_id = ?', postTitle, postBody, postId).then( () => {
+                callback()
+            })
+        })
+    },
+
+    deletePost(){
+
     }
 }

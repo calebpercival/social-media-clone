@@ -16,6 +16,19 @@ function editFormValue(post){ //sets the default form values to the post value
     counter = document.querySelector('form .counter')
     maxLength = input.getAttribute('maxlength')
     counter.innerText = maxLength - input.value.length + '/'+ maxLength
+
+    
+    //save edit
+    let form = document.querySelector("form"); //gets from element from document
+
+    document.getElementById('saveEdit').onclick = function(){
+        let data = new FormData(form)
+        let postTitle = data.get("postTitle");
+        let postBody = data.get("postBody");
+        if(callApi('/api/editPost',{post_id:post.post_id, postTitle:postTitle, postBody:postBody})){ //if edit post api returns true
+            window.location = '/' //refresh page
+        }
+    }
 }
 
 function loadPosts(itemsPerPage, currentPage){

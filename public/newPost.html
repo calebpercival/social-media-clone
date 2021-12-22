@@ -48,10 +48,10 @@
         form.addEventListener("submit", (event) => {
             event.preventDefault(); //stops form from submitting
 
-            let data = new FormData(form);
-            let postTitle = data.get("postTitle");
-            let postBody = data.get("postBody");
-            let userId = 1;
+            let data = new FormData(form)
+            let postTitle = data.get("postTitle")
+            let postBody = data.get("postBody")
+            let userId = 1
             
             if(callApi("/api/newPost", {postTitle:postTitle, postBody:postBody, userId: userId})){ //if api returns true
                 window.location = "/" //redirect to home page

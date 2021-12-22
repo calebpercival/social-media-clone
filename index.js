@@ -90,6 +90,12 @@ app.post('/api/getUserByToken', (req, res) => {
   })
 })
 
+app.post('/api/editPost', (req, res) => {
+  posts.editPost(req.body.post_id, req.body.postTitle, req.body.postBody, result => {
+    res.json(true)
+  })
+})
+
 // Tell us where we're running from
 console.log("Server running on http://localhost:" + port)
 app.listen(port)
