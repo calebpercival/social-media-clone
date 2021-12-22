@@ -49,7 +49,11 @@ module.exports = {
         })
     },
 
-    deletePost(){
-
+    deletePost(postId){
+        DB.connect().then( db => {
+            db.run('DELETE FROM posts WHERE post_id = ?', postId).then( () => {
+                
+            })
+        })
     }
 }

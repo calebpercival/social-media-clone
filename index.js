@@ -94,6 +94,13 @@ app.post('/api/editPost', (req, res) => {
   })
 })
 
+app.delete('/api/deletePost', (req, res) => {
+  posts.deletePost(req.body.post_id, result => {
+    console.error();
+    res.json(true)
+  })
+})
+
 // Tell us where we're running from
 console.log("Server running on http://localhost:" + port)
 app.listen(port)

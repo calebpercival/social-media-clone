@@ -6,7 +6,7 @@ fetch('/api/oldestPost').then( //calls api to get id of first/oldest post in pos
     }
 )
 
-function editFormValue(post){ //sets the default form values to the post value 
+function editForm(post){ //sets the default form values to the post value 
     //set form values
     document.getElementById('editTitle').defaultValue = post.title
     document.getElementById('editBody').defaultValue = post.body
@@ -31,6 +31,17 @@ function editFormValue(post){ //sets the default form values to the post value
     }
 }
 
+function deletePost(id){
+    document.getElementById('confirmDelete').onclick = function(){
+        // fetch('/api/deletePost', {method:'DELETE', headers:{"Content-Type": "application/json"}, body:JSON.stringify({post_id:id})}).then( response => {
+        //     // window.location = "/"
+        // })
+        if(callDelete('/api/deletePost',{post_id:id})){ //calls delete post api
+            window.location = "/" //refreshes page
+        }
+    }
+}
+
 function loadPosts(itemsPerPage, currentPage){
     let offset = itemsPerPage * currentPage
     let template = document.getElementById("postTemplate")
@@ -39,7 +50,7 @@ function loadPosts(itemsPerPage, currentPage){
     fetch('/api/posts?offset=' + offset).then( function(result){
         result.json().then(result => { // convert result to json
 
-            result.forEach(post => { //for each item in array
+            result.forEach(post => { //for each post in array
                 let clone = template.content.firstElementChild.cloneNode(true) //create clone of template post
 
                 callApi('/api/getUserById', {user_id:post.user_id}).then( //gets user using user id in post
@@ -59,14 +70,26 @@ function loadPosts(itemsPerPage, currentPage){
                     callApi('/api/getUserByToken', {}).then( function(result){ //calls api to get user id of currently logged user using token
                         result.json().then( result => {
                             if(result.id == post.user_id){ //if post belongs to logged in user
-                                let editBtn = document.createElement('a') //creates edit btn element
+
+                                //creates edit btn element
+                                let editBtn = document.createElement('a') 
                                 editBtn.innerHTML = "Edit"
                                 editBtn.classList ='btn'
                                 editBtn.setAttribute('data-bs-toggle', 'modal') 
                                 editBtn.setAttribute('data-bs-target', '#editModal')
-                                editBtn.onclick = function(){editFormValue(post)} //call function to set change default edit form values to post values
-                                clone.getElementsByClassName('edit')[0].appendChild(editBtn)
+                                editBtn.onclick = function(){editForm(post)} //call function to set change default edit form values to post values
                                 
+                                clone.getElementsByClassName('edit')[0].appendChild(editBtn)//adds edit button to post header
+
+                                let deleteBtn = document.createElement('a')
+                                deleteBtn.innerHTML = 'Delete'
+                                deleteBtn.classList = 'btn'
+                                deleteBtn.setAttribute('data-bs-toggle', 'modal') 
+                                deleteBtn.setAttribute('data-bs-target', '#deleteModal')
+                                console.log(post.post_id)
+                                deleteBtn.onclick = function(){deletePost(post.post_id)}
+
+                                clone.getElementsByClassName('edit')[0].appendChild(deleteBtn)
                             } 
                         }) 
                     })
