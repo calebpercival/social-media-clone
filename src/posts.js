@@ -33,10 +33,12 @@ module.exports = {
         })
     },
 
-    newPost(postTitle, postBody, user, callback){
+    newPost(postTitle, postBody, user, filepath, callback){
         DB.connect().then( db => {
-            db.run("INSERT INTO posts (title, body, user_id) values (?,?,?)", postTitle, postBody, user.id).then( () => {
+            db.run('INSERT INTO images (filepath) values (?)', filepath).then( (lastID) => {
+                db.run("INSERT INTO posts (title, body, user_id, img_id) values (?,?,?,?)", postTitle, postBody, user.id, lastID.lastID).then( () => {
                     callback()
+                }) 
             })
         })
     },

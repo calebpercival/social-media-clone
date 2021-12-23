@@ -1,4 +1,6 @@
 const express = require('express')
+const UUID = require('uuid')
+const multer = require('multer')
 const app = express()
 const port = 3000
 
@@ -9,6 +11,19 @@ const posts = require('./src/posts')
 const { title } = require('process')
 const { findByToken } = require('./src/users')
 const users = require('./src/users')
+
+//multer code from slide
+const storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, './public/uploads')
+  },
+  filename: function (req, file, callback) {
+    callback(null, UUID.v4() + '-' + file.originalname)
+  }
+})
+const upload = multer({
+  storage: storage
+})
 
 // Tell Express to server HTML, JS, CSS etc from the public/ folder
 // See: http://expressjs.com/en/starter/static-files.html
@@ -60,14 +75,14 @@ app.get('/api/oldestPost', (req, res) => {
   })
 })
 
-app.post('/api/newPost', function (req, res) {
+app.post('/api/newPost', upload.single('imageUpload'), function (req, res) {
   let apiToken = req.get('X-API-Token') //gets the api token from the header in the callApi fetch request
 
   if(apiToken){ //if there is a token
     user.findByToken(apiToken, userdata => {
       if(userdata){ //if there is a user
-        posts.newPost(req.body.postTitle, req.body.postBody, userdata, result => {
-          res.json(true)
+          posts.newPost(req.body.postTitle, req.body.postBody, userdata, req.file.path, result => {
+          res.send({})
         })
       }
     })
