@@ -48,13 +48,15 @@
         form.addEventListener("submit", (event) => {
             event.preventDefault(); //stops form from submitting
 
-            fetch('/api/newPost', {
+            if (fetch('/api/newPost', {
                 method: 'post',
                 headers:{
                     "X-API-Token": window.sessionStorage.getItem('token')
                 },
                 body: new FormData(form)
-            })
+            })){ //if api returns true
+                window.location ='/' //redirect to home page
+            }
 
             // let data = new FormData(form)
             // let postTitle = data.get("postTitle")

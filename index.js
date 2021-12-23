@@ -81,9 +81,15 @@ app.post('/api/newPost', upload.single('imageUpload'), function (req, res) {
   if(apiToken){ //if there is a token
     user.findByToken(apiToken, userdata => {
       if(userdata){ //if there is a user
+        if(req.file){//if there is a image in post
           posts.newPost(req.body.postTitle, req.body.postBody, userdata, req.file.path, result => {
           res.send({})
-        })
+          })
+        } else{
+          posts.newPost(req.body.postTitle, req.body.postBody, userdata, null, result => {
+            res.send({})
+            })
+        }
       }
     })
   }
