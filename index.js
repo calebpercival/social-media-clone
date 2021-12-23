@@ -85,7 +85,7 @@ app.post('/api/newPost', upload.single('imageUpload'), function (req, res) {
           posts.newPost(req.body.postTitle, req.body.postBody, userdata, req.file.path, result => {
           res.send({})
           })
-        } else{
+        } else{ //if post does not contain image
           posts.newPost(req.body.postTitle, req.body.postBody, userdata, null, result => {
             res.send({})
             })
