@@ -57,10 +57,19 @@ function loadPosts(itemsPerPage, currentPage){
                         })
                     }
                 )
+
+                // callApi('/api/getPostImage',{img_id:post.img_id}).then( //gets imnage
+
+                // )
                 
                 clone.getElementsByTagName('h5')[0].textContent = post.title //set post title
                 clone.getElementsByClassName('body')[0].textContent = post.body //set post body
-                
+    
+                if(post.filepath){//if the post has an image
+                    let path = post.filepath.substr(6,post.filepath.length-6) // removes the '/public' from the start of the filepath
+                    clone.getElementsByClassName('postImg')[0].src = path //sets image
+                }
+
                 let loggedIn = window.sessionStorage.getItem('token')// get current token from session
 
                 if(loggedIn){ //user is logged in
@@ -78,6 +87,7 @@ function loadPosts(itemsPerPage, currentPage){
                                 
                                 clone.getElementsByClassName('edit')[0].appendChild(editBtn)//adds edit button to post header
 
+                                //creates delete btn element
                                 let deleteBtn = document.createElement('a')
                                 deleteBtn.innerHTML = 'Delete'
                                 deleteBtn.classList = 'btn'

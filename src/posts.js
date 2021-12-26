@@ -14,11 +14,16 @@ module.exports = {
 
     getPosts(offset, limit, callback){//get range of posts
         DB.connect().then(db => {
-            db.all('SELECT * FROM posts ORDER BY post_id DESC LIMIT ? OFFSET ?',limit, offset).then(
+            db.all('SELECT * FROM posts LEFT JOIN images ON posts.img_id = images.img_id ORDER BY post_id DESC LIMIT ? OFFSET ?',limit, offset).then(
                 result => {
                     callback(result)
                 }
             )
+            // db.all('SELECT * FROM posts ORDER BY post_id DESC LIMIT ? OFFSET ?',limit, offset).then(
+            //     result => {
+            //         // callback(result)
+            //     }
+            // )
         })
     },
 
