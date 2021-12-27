@@ -38,12 +38,9 @@ app.get('/api/hello', function (req, res) {
 
 app.post('/api/login', function (req, res) {
   user.login(req.body.username, req.body.password, result => {
-
-    //if result is undefined
-    if (!result) {
+    if (!result) {//if result is undefined
       result = false
     }
-
     res.json({token: result.token, username: result.username}) //sends response
   })
 })
