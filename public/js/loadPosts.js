@@ -44,17 +44,21 @@ function editForm(post){ //sets the default form values to the post value
 
     document.getElementById('saveEdit').onclick = function(){ //when save edit button clicked
         let data = new FormData(form) //create new form data from edit form
+        let newPath = post.filepath //sets new file path to current file path
+        let newImgId = post.img_id 
 
         if(post.filepath && editImg.src == ""){//if there is img to be deleted
-        callDelete('/api/deleteImg',{img_id:post.img_id}) //calls delete image api
+            callDelete('/api/deleteImg',{img_id:post.img_id}) //calls delete image api
+            newPath = ""
+            newImgId = null
         }
         
         if (fetch('/api/editPost', { //call api
             method: 'post',
             headers:{
                 "X-API-Token": window.sessionStorage.getItem('token'),
-                "X-Img-Id":post.img_id, //store img id, path and post id in header as it is required but not part of form
-                "X-Img-Path":post.filepath,
+                "X-Img-Id":newImgId, //store img id, path and post id in header as it is required but not part of form
+                "X-Img-Path":newPath,
                 "X-Post-Id":post.post_id
             },
             body: new FormData(form)
