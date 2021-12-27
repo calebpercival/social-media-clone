@@ -53,7 +53,8 @@ function editForm(post){ //sets the default form values to the post value
             method: 'post',
             headers:{
                 "X-API-Token": window.sessionStorage.getItem('token'),
-                "X-Img-Id":post.img_id, //store img id and post id in header as it is required but not part of form
+                "X-Img-Id":post.img_id, //store img id, path and post id in header as it is required but not part of form
+                "X-Img-Path":post.filepath,
                 "X-Post-Id":post.post_id
             },
             body: new FormData(form)

@@ -116,14 +116,20 @@ app.post('/api/editPost', upload.single('fileUpload'), (req, res) => {
   if(apiToken){ //if there is a token
     user.findByToken(apiToken, userdata => {
       if(userdata){ //if there is a user
-        if(req.file){//if there is a image in post
+        if(req.file){//if there is a image in edit form data
           posts.editPost(req.get('X-Post-Id'), req.body.postTitle, req.body.postBody, req.file.path, req.get('X-Img-Id'), result => {
           res.send({})
           })
-        } else{ //if post does not contain image
+        } 
+        else if(req.get('X-Img-Id')){//else if x-posr-imageid in header 
+          posts.editPost(req.get('X-Post-Id'), req.body.postTitle, req.body.postBody, req.get('X-Img-Path'), req.get('X-Img-Id'), result => {
+            res.send({})
+          })
+        }
+        else{ //if post does not contain image
           posts.editPost(req.get('X-Post-Id'), req.body.postTitle, req.body.postBody, '', null, result => {
             res.send({})
-            })
+          })
         }
       }
     })
