@@ -32,3 +32,12 @@ form .counter{
 }
 
 //post image
+.postImg{
+    max-height: 400px;
+    object-fit: contain; //image must maintain aspect ratio but is resized
+}
+
+#imgPreview{
+    height: 100px;
+    object-fit: contain;
+}

@@ -11146,4 +11146,14 @@ form .counter {
   justify-content: space-between;
 }
 
+.postImg {
+  max-height: 400px;
+  object-fit: contain;
+}
+
+#imgPreview {
+  height: 100px;
+  object-fit: contain;
+}
+
 /*# sourceMappingURL=main.css.map */

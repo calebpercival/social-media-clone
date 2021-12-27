@@ -17,16 +17,48 @@ function editForm(post){ //sets the default form values to the post value
     maxLength = input.getAttribute('maxlength')
     counter.innerText = maxLength - input.value.length + '/'+ maxLength
 
+    let path
     
-    //save edit
-    let form = document.querySelector("form"); //gets from element from document
+    let editImg = document.getElementById('editImg') //gets div containing img and delete btn
+    let fileUploader = document.getElementById('fileUpload') //gets file uploader
+    if(post.filepath){ //if post contains image
+        path = post.filepath.substr(7,post.filepath.length - 7) //removes '/public/'
+        editImg.classList.remove('hidden') //shows img and delete btn
+        document.getElementById('imgPreview').src = path //sets image src
+        fileUploader.classList.add('hidden') //hides file uploader
+    }
+    else{
+        editImg.classList.add('hidden')
+        fileUploader.classList.remove('hidden')
+    }
 
-    document.getElementById('saveEdit').onclick = function(){
-        let data = new FormData(form)
-        let postTitle = data.get("postTitle");
-        let postBody = data.get("postBody");
-        if(callApi('/api/editPost',{post_id:post.post_id, postTitle:postTitle, postBody:postBody})){ //if edit post api returns true
-            window.location = '/' //refresh page
+    document.getElementById('deleteImgBtn').addEventListener('click', function() {
+        document.getElementById('editImg').classList.add('hidden')
+        editImg.src = ""
+        document.getElementById('fileUpload').classList.remove('hidden')
+        // callDelete('/api/deleteImg',{img_id:post.img_id}) //calls delete image api
+    })
+        
+    //save edit
+    let form = document.querySelector("form"); //gets form element from document
+
+    document.getElementById('saveEdit').onclick = function(){ //when save edit button clicked
+        let data = new FormData(form) //create new form data from edit form
+
+        if(post.filepath && editImg.src == ""){//if there is img to be deleted
+        callDelete('/api/deleteImg',{img_id:post.img_id}) //calls delete image api
+        }
+        
+        if (fetch('/api/editPost', { //call api
+            method: 'post',
+            headers:{
+                "X-API-Token": window.sessionStorage.getItem('token'),
+                "X-Img-Id":post.img_id, //store img id and post id in header as it is required but not part of form
+                "X-Post-Id":post.post_id
+            },
+            body: new FormData(form)
+        })){ //if api returns true
+            window.location ='/' //redirect to home page
         }
     }
 }
@@ -93,7 +125,6 @@ function loadPosts(itemsPerPage, currentPage){
                                 deleteBtn.classList = 'btn'
                                 deleteBtn.setAttribute('data-bs-toggle', 'modal') 
                                 deleteBtn.setAttribute('data-bs-target', '#deleteModal')
-                                console.log(post.post_id)
                                 deleteBtn.onclick = function(){deletePost(post.post_id)}
 
                                 clone.getElementsByClassName('edit')[0].appendChild(deleteBtn)

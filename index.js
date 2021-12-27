@@ -109,15 +109,37 @@ app.post('/api/getUserByToken', (req, res) => {
   })
 })
 
-app.post('/api/editPost', (req, res) => {
-  posts.editPost(req.body.post_id, req.body.postTitle, req.body.postBody, result => {
-    res.json(true)
-  })
+app.post('/api/editPost', upload.single('fileUpload'), (req, res) => {
+  let apiToken = req.get('X-API-Token') //gets the api token from the header in the callApi fetch request
+  console.log(req.file +" - "+ req.get('X-Post-Id'))
+  console.log(req.body.post_id)
+  if(apiToken){ //if there is a token
+    user.findByToken(apiToken, userdata => {
+      if(userdata){ //if there is a user
+        if(req.file){//if there is a image in post
+          posts.editPost(req.get('X-Post-Id'), req.body.postTitle, req.body.postBody, req.file.path, req.get('X-Img-Id'), result => {
+          res.send({})
+          })
+        } else{ //if post does not contain image
+          posts.editPost(req.get('X-Post-Id'), req.body.postTitle, req.body.postBody, '', null, result => {
+            res.send({})
+            })
+        }
+      }
+    })
+  }
 })
 
 app.delete('/api/deletePost', (req, res) => {
   posts.deletePost(req.body.post_id, result => {
     console.error();
+    res.json(true)
+  })
+})
+
+app.delete('/api/deleteImg', (req,res) => {
+  posts.deleteImg(req.body.img_id, result => {
+    console.error()
     res.json(true)
   })
 })

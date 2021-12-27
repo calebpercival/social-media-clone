@@ -55,17 +55,37 @@ module.exports = {
         })
     },
 
-    editPost(postId, postTitle, postBody, callback){
+    editPost(postId, postTitle, postBody, filepath, imgId, callback){
         DB.connect().then( db => {
-            db.run('UPDATE posts SET title = ?, body = ? WHERE post_id = ?', postTitle, postBody, postId).then( () => {
-                callback()
-            })
+            console.log("efilepath: "+filepath)
+            if(filepath != ""){ //if there is an image
+                this.deleteImg(imgId)
+                db.run('INSERT INTO images (filepath) values (?)', filepath).then( (lastId) => { //insert new image in table
+                    db.run('UPDATE posts SET title = ?, body = ?,  img_id = ? WHERE post_id = ?', postTitle, postBody, lastId.lastID, postId).then( () => { //update post table
+                        callback()
+                    })
+                })
+            }
+            else{ //else update post table without image id
+                if(filepath){console.log("no filepath: "+filepath)}
+                db.run('UPDATE posts SET title = ?, body = ?, img_id = ? WHERE post_id = ?', postTitle, postBody, null, postId).then( () => {
+                    callback()
+                })
+            }
         })
     },
 
     deletePost(postId){
         DB.connect().then( db => {
             db.run('DELETE FROM posts WHERE post_id = ?', postId).then( () => {
+                
+            })
+        })
+    },
+    
+    deleteImg(img_id){
+        DB.connect().then( db => {
+            db.run('DELETE FROM images WHERE img_id = ?', img_id).then( () => {
                 
             })
         })

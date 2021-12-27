@@ -67,8 +67,12 @@
                         <textarea class="form-control my-2 counted" id="editBody" name="postBody" maxlength="500" rows="5"></textarea>
                         <span class="counter">500/500</span>
                     </div>
-                    <!-- <label for="fileUpload" class="form-label my-2">Attach Image</label>
-                    <input type="file" class="form-control my-2" id="fileUpload"> -->
+                    <label for="fileUpload" class="form-label my-2">Attach Image</label>
+                    <div id="editImg" class="my-2 hidden">
+                        <img id="imgPreview" src="" alt="Previe of uploaded image">
+                        <a href="#" class="btn" id="deleteImgBtn">Delete Image</a>
+                    </div>
+                    <input type="file" class="form-control my-2" id="fileUpload" name="fileUpload">
                     <!-- <input type="submit" value="Submit" class="btn btn-primary my-2"> -->
                 </form>
             </div>
