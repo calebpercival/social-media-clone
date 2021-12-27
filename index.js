@@ -111,14 +111,13 @@ app.post('/api/getUserByToken', (req, res) => {
 
 app.post('/api/editPost', upload.single('fileUpload'), (req, res) => {
   let apiToken = req.get('X-API-Token') //gets the api token from the header in the callApi fetch request
-  console.log(req.file +" - "+ req.get('X-Post-Id'))
-  console.log(req.body.post_id)
+
   if(apiToken){ //if there is a token
     user.findByToken(apiToken, userdata => {
       if(userdata){ //if there is a user
         if(req.file){//if there is a image in edit form data
           posts.editPost(req.get('X-Post-Id'), req.body.postTitle, req.body.postBody, req.file.path, req.get('X-Img-Id'), result => {
-          res.send({})
+            res.send({})
           })
         } 
         else if(req.get('X-Img-Id')){//else if x-posr-imageid in header 

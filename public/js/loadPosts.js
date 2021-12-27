@@ -36,7 +36,6 @@ function editForm(post){ //sets the default form values to the post value
         document.getElementById('editImg').classList.add('hidden')
         editImg.src = ""
         document.getElementById('fileUpload').classList.remove('hidden')
-        // callDelete('/api/deleteImg',{img_id:post.img_id}) //calls delete image api
     })
         
     //save edit
