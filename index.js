@@ -46,7 +46,7 @@ app.post('/api/login', function (req, res) {
 })
 
 app.post('/api/newUser', function (req, res) {
-  users.newUser(req.body.username, req.body.password, result => {
+  users.newUser(req.body.username, req.body.password, req.body.email, result => {
     res.json(true)
   })
 })

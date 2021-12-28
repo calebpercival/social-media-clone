@@ -88,7 +88,7 @@
 
             if (validation == "" && uniqueName === true){ //if form entries are valid and username is unique
                 invalid.classList.add('hidden')
-                callApi('/api/newUser',{username: username, password: password}).then(
+                callApi('/api/newUser',{username: username, password: password, email: email}).then(
                     function(response) {
                         response.json().then(response => {
                             document.getElementById('successMsg').classList.remove('hidden')

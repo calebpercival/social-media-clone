@@ -78,11 +78,11 @@ module.exports = {
         })
     },
 
-    newUser(username, password, callback) {
+    newUser(username, password, email, callback) {
         DB.connect().then( db=> {
             bcrypt.genSalt(12).then( salt => { //generate salt (unique string of letters/numbers)
                 bcrypt.hash(password, salt).then( hash => { //concatinate salt to password and hash
-                    db.run("INSERT INTO users (username, password) values (?,?)", username, hash).then( () => { //add username and hash to database
+                    db.run("INSERT INTO users (username, password, email) values (?,?,?)", username, hash, email).then( () => { //add username and hash to database
                         callback()
                     })
                 })
