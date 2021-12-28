@@ -60,6 +60,24 @@ module.exports = {
         })
     },
 
+    findByName(username, callback) {
+        DB.connect().then(db => {
+            db.get('SELECT * FROM users WHERE username = ?', username).then(result => {
+                if (result == undefined){
+                    callback({})
+                }
+                else{
+                    callback(result)
+                }
+            })
+            // callback()
+            // .catch(err => {
+            //     console.log("users.findByName failed with error " + err)
+            //     callback()
+            // })
+        })
+    },
+
     newUser(username, password, callback) {
         DB.connect().then( db=> {
             bcrypt.genSalt(12).then( salt => { //generate salt (unique string of letters/numbers)

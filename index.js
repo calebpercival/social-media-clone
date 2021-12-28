@@ -51,6 +51,12 @@ app.post('/api/newUser', function (req, res) {
   })
 })
 
+app.post('/api/checkUsername', function (req, res) {
+  users.findByName(req.body.username, result => {
+    res.json({username: result.username})
+  })
+})
+
 app.post('/api/getPost', function (req, res) { //api to get posts
   posts.getPost(req.body.post_id, result => {
     res.json({post_id: result.post_id, title: result.title, body: result.body})
