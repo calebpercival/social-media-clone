@@ -8,6 +8,7 @@ const port = 3000
 const funcs = require('./src/funcs.js')
 const user = require('./src/users')
 const posts = require('./src/posts')
+const comments = require('./src/comments')
 const { title } = require('process')
 const { findByToken } = require('./src/users')
 const users = require('./src/users')
@@ -60,6 +61,12 @@ app.post('/api/checkUsername', function (req, res) {
 app.post('/api/getPost', function (req, res) { //api to get posts
   posts.getPost(req.body.post_id, result => {
     res.json({post_id: result.post_id, title: result.title, body: result.body})
+  })
+})
+
+app.get('/api/getComments', function (req, res){
+  comments.getComments(req.query.post_id, result => {
+    res.json(result)//{comment_id: result.id, body:result.body, user_id:result.user_id})
   })
 })
 

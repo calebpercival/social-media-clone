@@ -32,6 +32,7 @@
         </nav>
     </header>
 
+    <!-- post template -->
     <div class="container">
         <template id="postTemplate">
             <div class="card text-dark bg-light mb-2 post">
@@ -41,9 +42,23 @@
                     <p class="card-text body"></p>
                 </div>
                 <img class="postImg" src="" alt="">
+                <div class="card-footer">
+                    <div class="comments">
+                    </div>
+                    <div class="commentInput">
+                        <textarea class="form-control my-2" name="postBody" maxlength="500" rows="3"></textarea>
+                        <button class="btn btn-secondary">Comment</button>
+                    </div>
+                </div>
             </div>
         </template>
         <template id="edit"><a>edit</a></template>
+        <template id="commentTemplate">
+            <div class="comment">
+                <p class="user"></p>
+                <P class="commentBody"></P>
+            </div>
+        </template>
         <div id="postsContainer"></div>
         <button onclick="nextPage()" class="btn btn-primary mx-auto my-2" id="loadPostsBtn">Load more...</button>
     </div>

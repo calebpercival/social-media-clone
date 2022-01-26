@@ -20,7 +20,6 @@ form .counter{
     right: 10px;
 }
 
-
 #loadPostsBtn{ //Load more button positioning
     display: block;    
 }
@@ -29,6 +28,10 @@ form .counter{
 .card-header{
     display: flex;
     justify-content: space-between;
+}
+
+.user{
+    font-weight:650;
 }
 
 //post image

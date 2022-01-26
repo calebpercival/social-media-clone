@@ -78,6 +78,7 @@ function deletePost(id){
 function loadPosts(itemsPerPage, currentPage){
     let offset = itemsPerPage * currentPage
     let template = document.getElementById("postTemplate")
+    let commentTemplate = document.getElementById('commentTemplate')
     let container = document.getElementById("postsContainer")
     
     fetch('/api/posts?offset=' + offset).then( function(result){
@@ -136,6 +137,27 @@ function loadPosts(itemsPerPage, currentPage){
                         }) 
                     })
                 }
+
+                //comments
+                fetch('/api/getComments?post_id='+post.post_id).then( function(result){
+                    result.json().then(comments => { //calls api to get comments 
+                        Object.values(comments).forEach(comment => {
+                            let commentClone = commentTemplate.content.firstElementChild.cloneNode(true) //create clone of comment template
+
+                            callApi('/api/getUserById', {user_id:comment.user_id}).then( //gets user using user id in post
+                                function(result){
+                                    result.json().then(result => {
+                                        commentClone.getElementsByClassName('user')[0].textContent = result.username //sets username in post header
+                                    })
+                                }
+                            )
+                            commentClone.getElementsByClassName('commentBody')[0].textContent = comment.body
+                            // commentClone.getElementsByClassName('comments')[0].appendChild()
+
+                            clone.getElementsByClassName('comments')[0].appendChild(commentClone)
+                        })
+                    })
+                })
 
                 container.appendChild(clone)
 

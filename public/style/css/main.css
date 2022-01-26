@@ -11146,6 +11146,10 @@ form .counter {
   justify-content: space-between;
 }
 
+.user {
+  font-weight: 650;
+}
+
 .postImg {
   max-height: 400px;
   object-fit: contain;
