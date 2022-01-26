@@ -136,12 +136,28 @@ function loadPosts(itemsPerPage, currentPage){
                             } 
                         }) 
                     })
+
+                    //show comments input
+                    let form = clone.getElementsByClassName('commentInput')[0]
+                    form.classList.remove('hidden')
+
+                    //post comment
+                    form.addEventListener('submit', (event) => {
+                        event.preventDefault() //stops form submitting
+
+                        let data = new FormData(form)
+                        let commentBody = data.get('commentBody')
+                        if(callApi('/api/newComment', {postId:post.post_id,commentBody:commentBody})){ //if api returns true
+                            window.location = "/"
+                        } 
+                    })
+
                 }
 
                 //comments
                 fetch('/api/getComments?post_id='+post.post_id).then( function(result){
                     result.json().then(comments => { //calls api to get comments 
-                        Object.values(comments).forEach(comment => {
+                        comments.forEach(comment => {
                             let commentClone = commentTemplate.content.firstElementChild.cloneNode(true) //create clone of comment template
 
                             callApi('/api/getUserById', {user_id:comment.user_id}).then( //gets user using user id in post
@@ -152,7 +168,6 @@ function loadPosts(itemsPerPage, currentPage){
                                 }
                             )
                             commentClone.getElementsByClassName('commentBody')[0].textContent = comment.body
-                            // commentClone.getElementsByClassName('comments')[0].appendChild()
 
                             clone.getElementsByClassName('comments')[0].appendChild(commentClone)
                         })

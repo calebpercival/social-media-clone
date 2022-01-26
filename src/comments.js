@@ -9,5 +9,14 @@ module.exports = {
                 }
             )
         })
+    },
+
+    newComment(postId, commentBody, userId, callback){
+        DB.connect().then( db => {
+            db.run('INSERT INTO comments (body, post_id, user_id) values(?,?,?)', commentBody, postId, userId).then( () => {
+                callback()
+            })
+        })
+
     }
 }

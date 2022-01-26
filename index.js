@@ -105,6 +105,17 @@ app.post('/api/newPost', upload.single('imageUpload'), function (req, res) {
   }
 })
 
+app.post('/api/newComment', function (req,res) {
+  let apiToken = req.get('X-API-Token') //gets token
+  user.findByToken(apiToken, userdata => { //gets user from token
+    if(userdata){ //if there is a user
+      comments.newComment(req.body.postId, req.body.commentBody, userdata.id, result => {
+        res.send({})
+      })
+    }
+  })
+})
+
 app.post('/api/getUserById', (req, res) => {
   user.findById(req.body.user_id, result => {
     res.json({username:result.username})
