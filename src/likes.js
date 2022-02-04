@@ -40,5 +40,13 @@ module.exports = {
                 }
             })
         })
+    },
+
+    likeCount(postId, callback){
+        DB.connect().then(db => {
+            db.get('SELECT COUNT (*) FROM likes WHERE post_id = ?',postId).then(result => {
+                callback(result)
+            })
+        })
     }
 }

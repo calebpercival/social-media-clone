@@ -204,6 +204,13 @@ app.post('/api/isLiked', (req, res) => { //returns true or false if the post is 
   }
 })
 
+app.post('/api/likeCount', (req, res) => {
+  let postId = req.body.postId
+  likes.likeCount(postId, result => {
+    res.send(result)
+  })
+})
+
 // Tell us where we're running from
 console.log("Server running on http://localhost:" + port)
 app.listen(port)

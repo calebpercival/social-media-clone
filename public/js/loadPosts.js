@@ -76,15 +76,6 @@ function deletePost(id){
 }
 
 function like(postId, callback){
-    // fetch('/posts/101/like', {
-    //     method:'POST'
-    // }).then(function (result){
-    //     result.json().then(result => {
-            
-    //         console.log(result)
-    //         return result
-    //     })
-    // })
     callApi('/posts/' + postId + '/like',{}).then(function (result){
             result.json().then(result => {
                 
@@ -195,19 +186,26 @@ function loadPosts(itemsPerPage, currentPage){
                                 likeBtn.classList.remove('active')
                                 likeBtn.textContent = 'like'
                             }
+
+                            //update like count
+                            
+                            let likeCounter = clone.getElementsByClassName('likeCounter')[0]
+                            callApi('/api/likeCount',{postId:post.post_id}).then(result => {
+                                result.json().then( likeCount => {
+                                    likeCounter.textContent = likeCount['COUNT (*)']
+                                })
+                            })
                         })
                     }
 
                 }
 
-                //TO DO
-                //get like counter from html
-                //get likes from db
-                //change likes text in html
-
                 let likeCounter = clone.getElementsByClassName('likeCounter')[0]
-                //call an api to get * likes Where post = ? 
-                    //result - set like counter to result 
+                callApi('/api/likeCount',{postId:post.post_id}).then(result => {
+                    result.json().then( likeCount => {
+                        likeCounter.textContent = likeCount['COUNT (*)']
+                    })
+                })
 
                 //comments
                 fetch('/api/getComments?post_id='+post.post_id).then( function(result){
