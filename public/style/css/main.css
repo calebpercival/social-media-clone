@@ -11160,4 +11160,25 @@ form .counter {
   object-fit: contain;
 }
 
+.likeComment {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.likeComment .likes {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.likeComment p {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.comment .user {
+  margin: 0;
+  font-weight: 450;
+}
+
 /*# sourceMappingURL=main.css.map */
