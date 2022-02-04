@@ -9,6 +9,7 @@ const funcs = require('./src/funcs.js')
 const user = require('./src/users')
 const posts = require('./src/posts')
 const comments = require('./src/comments')
+const likes = require('./src/likes')
 const { title } = require('process')
 const { findByToken } = require('./src/users')
 const users = require('./src/users')
@@ -168,6 +169,39 @@ app.delete('/api/deleteImg', (req,res) => {
     console.error()
     res.json(true)
   })
+})
+
+//likes
+app.post('/posts/:postId/like', (req, res) => {
+  let postId = req.params.postId // gets post id from the route
+  let apiToken = req.get('X-API-Token')
+
+  if(apiToken){
+    users.findByToken(apiToken, user => {
+      likes.toggleLike(postId, user.id, result => {
+        res.send(result)
+      })
+    })
+  }
+  else if(error) {
+    res.status(500).json({ error: error });
+  }
+})
+
+app.post('/api/isLiked', (req, res) => { //returns true or false if the post is liked by the current user
+  let apiToken = req.get('X-API-Token')
+  let postId = req.body.postId
+
+  if(apiToken){
+    users.findByToken(apiToken, user => {
+      likes.isLiked(postId, user.id, result => {
+        res.send(result)
+      })
+    })
+  }
+  else if(error) {
+    res.status(500).json({ error: error });
+  }
 })
 
 // Tell us where we're running from

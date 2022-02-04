@@ -75,6 +75,25 @@ function deletePost(id){
     }
 }
 
+function like(postId, callback){
+    // fetch('/posts/101/like', {
+    //     method:'POST'
+    // }).then(function (result){
+    //     result.json().then(result => {
+            
+    //         console.log(result)
+    //         return result
+    //     })
+    // })
+    callApi('/posts/' + postId + '/like',{}).then(function (result){
+            result.json().then(result => {
+                
+                console.log(result.like)
+                callback(result.like)
+            })
+        })
+}
+
 function loadPosts(itemsPerPage, currentPage){
     let offset = itemsPerPage * currentPage
     let template = document.getElementById("postTemplate")
@@ -94,10 +113,6 @@ function loadPosts(itemsPerPage, currentPage){
                         })
                     }
                 )
-
-                // callApi('/api/getPostImage',{img_id:post.img_id}).then( //gets imnage
-
-                // )
                 
                 clone.getElementsByTagName('h5')[0].textContent = post.title //set post title
                 clone.getElementsByClassName('body')[0].textContent = post.body //set post body
@@ -135,6 +150,7 @@ function loadPosts(itemsPerPage, currentPage){
                                 clone.getElementsByClassName('edit')[0].appendChild(deleteBtn)
                             } 
                         }) 
+
                     })
 
                     //show comments input
@@ -152,7 +168,46 @@ function loadPosts(itemsPerPage, currentPage){
                         } 
                     })
 
+                    let likeBtn = clone.getElementsByClassName('likeBtn')[0]
+                    likeBtn.classList.remove('hidden') 
+
+                    callApi('/api/isLiked',{postId:post.post_id}).then(function (result){
+                        result.json().then(result => {
+                            console.log(result)
+                            if (result){
+                                likeBtn.classList.add('active')
+                                likeBtn.textContent = 'liked'
+                            }
+                            else{
+                                likeBtn.classList.remove('active')
+                                likeBtn.textContent = 'like'
+                            }
+                        })
+                    })
+
+                    likeBtn.onclick = function(){
+                        like(post.post_id, result => {
+                            if (result){
+                                likeBtn.classList.add('active')
+                                likeBtn.textContent = 'liked'
+                            }
+                            else{
+                                likeBtn.classList.remove('active')
+                                likeBtn.textContent = 'like'
+                            }
+                        })
+                    }
+
                 }
+
+                //TO DO
+                //get like counter from html
+                //get likes from db
+                //change likes text in html
+
+                let likeCounter = clone.getElementsByClassName('likeCounter')[0]
+                //call an api to get * likes Where post = ? 
+                    //result - set like counter to result 
 
                 //comments
                 fetch('/api/getComments?post_id='+post.post_id).then( function(result){
