@@ -70,11 +70,6 @@ module.exports = {
                     callback(result)
                 }
             })
-            // callback()
-            // .catch(err => {
-            //     console.log("users.findByName failed with error " + err)
-            //     callback()
-            // })
         })
     },
 
